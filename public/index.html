@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ayush Janseva Kendra — Print Service</title><link rel="stylesheet" href="style.css"></head>
+<body class="login-page">
+<header><div class="brand"><div class="brand-mark">AJ</div><div><strong>Ayush Janseva Kendra</strong><span>Digital Services • Phase 16</span></div></div></header>
+<main class="login-wrap"><section class="login-card">
+<div class="login-title"><span class="eyebrow">PRINT SERVICE</span><h1>Welcome</h1><p>Login or create your customer account to continue.</p></div>
+<div class="role-tabs"><button class="role-tab active" data-role="customer">Customer</button><button class="role-tab" data-role="admin">Admin</button></div>
+<div id="loginPanel">
+<form id="loginForm"><input type="hidden" id="role" value="customer"><label>Login ID<input id="username" required value="customer" autocomplete="username" placeholder="Enter your Login ID"></label><label>Password<input id="password" type="password" required value="customer123" autocomplete="current-password" placeholder="Enter password"></label><button class="primary full" type="submit">Login <span>→</span></button><div id="result"></div></form>
+<div id="customerSignupLink" class="signup-link">New customer? <button type="button" id="showSignup">Create a new account</button></div>
+</div>
+<div id="signupPanel" class="hidden">
+<form id="signupForm"><div class="signup-heading"><h2>Create Customer Account</h2><p>Your Your 10-digit mobile number will be your Customer Login ID.</p></div><label>Full Name<input id="signupName" required autocomplete="name" placeholder="Enter your full name"></label><label>Mobile Number<input id="signupPhone" required inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="10-digit mobile number"></label><label>Create Password<input id="signupPassword" type="password" minlength="6" required autocomplete="new-password" placeholder="Minimum 6 characters"></label><label>Confirm Password<input id="signupConfirm" type="password" minlength="6" required autocomplete="new-password" placeholder="Re-enter password"></label><button class="primary full" type="submit">Create Account <span>→</span></button><div id="signupResult"></div></form>
+<div class="signup-link">Already have an account? <button type="button" id="backToLogin">Login here</button></div>
+</div>
+<div class="demo-box" id="demoBox"><b>Prototype login</b><div id="demoText">Customer: use your registered <code>10-digit mobile number</code> and your password.</div><div id="adminDemo" class="hidden">Admin: <code>admin</code> / <code>admin123</code> (prototype)</div><small id="demoNote">Customer Login ID = registered mobile number. You choose your password.</small></div>
+</section><section class="login-side"><div class="seal">AJ</div><h2>Ayush Janseva Kendra</h2><p>Fast, secure & trusted digital services under one roof.</p><div class="feature-row"><span>✓</span> Online Print Orders</div><div class="feature-row"><span>✓</span> Customer & Admin Dashboard</div><div class="feature-row"><span>✓</span> Customer Account & Login ID</div><div class="feature-row"><span>✓</span> Simple Paper & Print Control</div></section></main>
+<script src="login.js"></script></body></html>
