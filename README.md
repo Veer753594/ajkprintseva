@@ -20,3 +20,13 @@
 - Password: `admin123`
 
 After updating the GitHub repository, trigger a new Netlify deploy.
+
+
+## Phase 16 print/payment update
+- B&W Document: ₹5/page
+- Color Document: ₹10/page
+- Color Photo A4: ₹100/page
+- Customer payment: UPI app link, QR display, or Cash Payment selection.
+- UPI ID: 7535948371@ybl
+- Admin Print File opens the file and automatically calls the browser print command after loading.
+- Standard Chrome/Android security does not allow a webpage to click the final system print-dialog button. For fully dialog-free printing, use a managed/kiosk browser or a local print agent connected to the printer.
