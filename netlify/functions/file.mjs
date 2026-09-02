@@ -2,9 +2,13 @@ import { getStore } from '@netlify/blobs';
 import { getUser, json } from './_auth.mjs';
 const store=()=>getStore('phase16-print');
 export default async (request)=>{
-  const user=getUser(request); if(!user) return json({error:'Please login first.'},401);
+  const url=new URL(request.url);
+  const queryToken=url.searchParams.get('token') || '';
+  const authRequest=queryToken ? new Request(request,{headers:new Headers({...Object.fromEntries(request.headers),authorization:`Bearer ${queryToken}`})}) : request;
+  const user=getUser(authRequest);
+  if(!user) return json({error:'Please login first.'},401);
   try{
-    const p=new URL(request.url).searchParams, fileId=p.get('file'), orderId=p.get('order');
+    const p=url.searchParams, fileId=p.get('file'), orderId=p.get('order');
     if(!fileId||!orderId) return json({error:'Missing file.'},400);
     const orders=(await store().get('orders.json',{type:'json'}))||[]; const order=orders.find(o=>o.id===orderId);
     if(!order||(user.role!=='admin'&&order.customer.username!==user.username)) return json({error:'Access denied.'},403);

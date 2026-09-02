@@ -11,10 +11,14 @@ export default async (request) => {
     if(user.role!=='admin'&&order.customer.username!==user.username) return json({error:'Access denied.'},403);
     if(request.method==='GET') return json(order);
     if(request.method!=='PATCH') return json({error:'Method not allowed.'},405);
-    if(user.role!=='admin') return json({error:'Access denied.'},403);
     const body=await request.json().catch(()=>({}));
+    if(user.role==='customer'){
+      if(body.paymentStatus==='Payment Submitted') order.paymentStatus='Payment Submitted'; else return json({error:'Access denied.'},403);
+      order.updatedAt=new Date().toISOString(); await saveOrders(orders); return json({ok:true,order});
+    }
     if(body.status) order.status=String(body.status);
     if(body.adminNote!==undefined) order.adminNote=String(body.adminNote);
+    if(body.paymentStatus) order.paymentStatus=String(body.paymentStatus);
     if(body.filePaperTypes) for(const f of order.files) if(body.filePaperTypes[f.id]) f.paperType=String(body.filePaperTypes[f.id]);
     if(body.fileStatuses) for(const f of order.files) if(body.fileStatuses[f.id]) f.status=String(body.fileStatuses[f.id]);
     order.updatedAt=new Date().toISOString(); await saveOrders(orders); return json({ok:true,order});
