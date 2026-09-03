@@ -1,0 +1,9 @@
+{
+  "name": "phase16-ayush-netlify",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "netlify dev" },
+  "dependencies": { "@netlify/blobs": "^8.1.0" },
+  "devDependencies": { "netlify-cli": "^23.4.0" }
+}

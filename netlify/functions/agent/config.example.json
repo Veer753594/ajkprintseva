@@ -1,0 +1,15 @@
+{
+  "apiBase": "https://YOUR-SITE.netlify.app",
+  "agentKey": "CHANGE_THIS_TO_THE_NETLIFY_AGENT_KEY",
+  "printerName": "HP LaserJet Pro MFP M1",
+  "pollMs": 3000,
+  "downloadDir": "C:\\AyushJanseva\\PrintJobs",
+  "sumatraPath": "C:\\Program Files\\SumatraPDF\\SumatraPDF.exe",
+  "libreOfficePath": "C:\\Program Files\\LibreOffice\\program\\soffice.exe",
+  "defaultPaper": "A4",
+  "duplexMode": "duplex",
+  "binByPaper": {
+    "Plain Paper": "auto",
+    "Photo Paper": "auto"
+  }
+}

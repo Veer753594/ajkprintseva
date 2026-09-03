@@ -1,0 +1,9 @@
+{
+  "name":"ayush-janseva-autoprint-agent",
+  "version":"2.0.0",
+  "private":true,
+  "type":"module",
+  "scripts":{"start":"node agent.mjs","build-exe":"npx pkg agent.mjs --targets node20-win-x64 --output AyushJanseva-AutoPrint-Agent.exe"},
+  "dependencies":{},
+  "devDependencies":{"pkg":"^5.8.1"}
+}
