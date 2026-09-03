@@ -12,15 +12,32 @@ export default async (request) => {
     if(request.method==='GET') return json(order);
     if(request.method!=='PATCH') return json({error:'Method not allowed.'},405);
     const body=await request.json().catch(()=>({}));
+
     if(user.role==='customer'){
-      if(body.paymentStatus==='Payment Submitted') order.paymentStatus='Payment Submitted'; else return json({error:'Access denied.'},403);
+      const requested=String(body.paymentStatus||'');
+      if(!['Payment Submitted','Cash Pending'].includes(requested)) return json({error:'Customers can only submit UPI or Cash payment status.'},403);
+      if(order.paymentStatus==='Paid') return json({error:'This order is already marked Paid.'},400);
+      order.paymentStatus=requested;
       order.updatedAt=new Date().toISOString(); await saveOrders(orders); return json({ok:true,order});
     }
-    if(body.status) order.status=String(body.status);
+
+    if(body.status!==undefined){
+      const next=String(body.status);
+      if(next==='Approved' && order.paymentStatus!=='Paid') return json({error:'Payment must be marked Paid before Auto Print approval.'},400);
+      if(['Cancelled'].includes(next) && order.status==='Completed') return json({error:'Completed orders cannot be cancelled.'},400);
+      order.status=next;
+      if(next==='Approved'){
+        for(const f of order.files||[]) if(f.status==='Failed') f.status='Pending';
+      }
+    }
     if(body.adminNote!==undefined) order.adminNote=String(body.adminNote);
-    if(body.paymentStatus) order.paymentStatus=String(body.paymentStatus);
-    if(body.filePaperTypes) for(const f of order.files) if(body.filePaperTypes[f.id]) f.paperType=String(body.filePaperTypes[f.id]);
-    if(body.fileStatuses) for(const f of order.files) if(body.fileStatuses[f.id]) f.status=String(body.fileStatuses[f.id]);
+    if(body.paymentStatus!==undefined){
+      const p=String(body.paymentStatus);
+      if(!['Pending','Payment Submitted','Cash Pending','Paid','Rejected'].includes(p)) return json({error:'Invalid payment status.'},400);
+      order.paymentStatus=p;
+    }
+    if(body.filePaperTypes) for(const f of order.files||[]) if(body.filePaperTypes[f.id]) f.paperType=String(body.filePaperTypes[f.id]);
+    if(body.fileStatuses) for(const f of order.files||[]) if(body.fileStatuses[f.id]) f.status=String(body.fileStatuses[f.id]);
     order.updatedAt=new Date().toISOString(); await saveOrders(orders); return json({ok:true,order});
   }catch(e){console.error('ORDER_ERROR',e);return json({error:'Could not update the order. '+e.message},500);}
 };
